@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppProyectoInvest_MAUI.Views.UsuarioInfoView"
+             Title="Información del Usuario"
+             BackgroundColor="#ffffff">
+
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#4CAF50" Offset="0.0" />
+            <GradientStop Color="#81C784" Offset="1.0" />
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <StackLayout Padding="20" Spacing="20" VerticalOptions="Fill">
+        <Image Source="user_icon.png" 
+               HeightRequest="100" 
+               WidthRequest="100" 
+               HorizontalOptions="Center" 
+               VerticalOptions="Center" />
+
+        <Label Text="Introduce tu cédula" 
+               FontSize="24" 
+               TextColor="White" 
+               HorizontalOptions="Center" 
+               FontAttributes="Bold" />
+
+        <Frame BackgroundColor="#ffffff" 
+               CornerRadius="10" 
+               HasShadow="True" 
+               Padding="0">
+            <Entry x:Name="CedulaEntry" 
+                   Placeholder="Cédula" 
+                   Keyboard="Numeric" 
+                   FontSize="18" 
+                   TextColor="#333333" 
+                   HeightRequest="50" 
+                   Margin="10" />
+        </Frame>
+
+        <Button Text="Obtener Información" 
+                Clicked="OnObtenerInformacionClicked" 
+                BackgroundColor="#ffffff" 
+                TextColor="#4CAF50" 
+                FontSize="18" 
+                HeightRequest="50" 
+                CornerRadius="25" 
+                Margin="0,10" 
+                FontAttributes="Bold" />
+
+        <Frame BackgroundColor="#ffffff" 
+               CornerRadius="15" 
+               Padding="15" 
+               HasShadow="True">
+            <StackLayout>
+                <Label x:Name="NombreLabel" 
+                       FontSize="22" 
+                       TextColor="#4CAF50" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center" />
+                <Label x:Name="CedulaLabel" 
+                       FontSize="18" 
+                       TextColor="#555555" 
+                       HorizontalOptions="Center" />
+                <Label x:Name="TipoIdentificacionLabel" 
+                       FontSize="18" 
+                       TextColor="#555555" 
+                       HorizontalOptions="Center" />
+                <Label x:Name="LicenseLabel" 
+                       FontSize="16" 
+                       TextColor="#888888" 
+                       HorizontalOptions="Center" />
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</ContentPage>

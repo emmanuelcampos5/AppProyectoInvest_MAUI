@@ -8,51 +8,35 @@ using System.Threading.Tasks;
 
 namespace AppProyectoInvest_MAUI.Controllers
 {
-    public static class ApiController
+    public class ApiController
     {
-        private static readonly HttpClient _httpClient = new HttpClient
+        private readonly HttpClient _httpClient;
+
+        public ApiController()
         {
-            BaseAddress = new Uri("http://www.tallerweb.somee.com/api")
-        };
+            _httpClient = new HttpClient();
+        }
 
-        //public static async Task<ApiResponse> Login(UserLogin userLogin)
-        //{
-        //    try
-        //    {
-        //        var json = JsonSerializer.Serialize(userLogin);
-        //        var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-        //        var response = await _httpClient.PostAsync("/Usuario", content);
-
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            var responseBody = await response.Content.ReadAsStringAsync();
-        //            return JsonSerializer.Deserialize<ApiResponse>(responseBody);
-        //        }
-
-        //        return new ApiResponse
-        //        {
-        //            Success = false,
-        //            Message = "Error al iniciar sesión. Inténtelo nuevamente."
-        //        };
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        return new ApiResponse
-        //        {
-        //            Success = false,
-        //            Message = "Error de conexión. Por favor, revise su conexión a Internet."
-        //        };
-        //    }
-        //}
-
-        public static async Task<ApiResponse> Login(UserLogin userLogin)
+        public async Task<UsuarioResponse> ObtenerNombrePorCedulaAsync(string cedula)
         {
-                return new ApiResponse
-                {
-                    Success = true,
-                    Message = "Sesion iniciada correctamente, Bienvenido " + userLogin.Email
-                };                      
+            string url = $"https://apis.gometa.org/cedulas/{cedula}";
+
+            var response = await _httpClient.GetAsync(url);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error al obtener datos: {response.StatusCode}");
+            }
+
+            string jsonResponse = await response.Content.ReadAsStringAsync();
+
+            // Deserializa la respuesta JSON
+            var resultado = JsonSerializer.Deserialize<UsuarioResponse>(jsonResponse, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            return resultado;
         }
     }
 }
