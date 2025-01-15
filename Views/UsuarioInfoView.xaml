@@ -7,8 +7,8 @@
 
     <ContentPage.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-            <GradientStop Color="#4CAF50" Offset="0.0" />
-            <GradientStop Color="#81C784" Offset="1.0" />
+            <GradientStop Color="#7C99BD" Offset="0.0" />
+            <GradientStop Color="#314865" Offset="1.0" />
         </LinearGradientBrush>
     </ContentPage.Background>
 
@@ -41,7 +41,7 @@
         <Button Text="Obtener Información" 
                 Clicked="OnObtenerInformacionClicked" 
                 BackgroundColor="#ffffff" 
-                TextColor="#4CAF50" 
+                TextColor="#1A2634" 
                 FontSize="18" 
                 HeightRequest="50" 
                 CornerRadius="25" 
@@ -55,7 +55,7 @@
             <StackLayout>
                 <Label x:Name="NombreLabel" 
                        FontSize="22" 
-                       TextColor="#4CAF50" 
+                       TextColor="#1A2634" 
                        FontAttributes="Bold" 
                        HorizontalOptions="Center" />
                 <Label x:Name="CedulaLabel" 
