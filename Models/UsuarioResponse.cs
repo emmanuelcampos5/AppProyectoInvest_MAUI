@@ -21,8 +21,7 @@ namespace AppProyectoInvest_MAUI.Models
         [JsonPropertyName("cedula")]
         public string Cedula { get; set; }
 
-        [JsonPropertyName("license")]
-        public string License { get; set; }
+        
 
         [JsonPropertyName("results")]
         public List<UsuarioResult> Results { get; set; }

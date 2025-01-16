@@ -1,8 +1,6 @@
 ﻿using AppProyectoInvest_MAUI.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -11,32 +9,43 @@ namespace AppProyectoInvest_MAUI.Controllers
     public class ApiController
     {
         private readonly HttpClient _httpClient;
-
-        public ApiController()
+        private static readonly JsonSerializerOptions _jsonOptions = new()
         {
-            _httpClient = new HttpClient();
+            PropertyNameCaseInsensitive = true,
+        };
+        private const string BaseUrl = "https://apis.gometa.org/cedulas/";
+
+        public ApiController(HttpClient httpClient)
+        {
+            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
 
         public async Task<UsuarioResponse> ObtenerNombrePorCedulaAsync(string cedula)
         {
-            string url = $"https://apis.gometa.org/cedulas/{cedula}";
+            if (string.IsNullOrWhiteSpace(cedula))
+                throw new ArgumentException("La cédula no puede ser nula o vacía.", nameof(cedula));
 
-            var response = await _httpClient.GetAsync(url);
+            string url = $"{BaseUrl}{cedula}";
 
-            if (!response.IsSuccessStatusCode)
+            try
             {
-                throw new Exception($"Error al obtener datos: {response.StatusCode}");
+                return await RealizarSolicitudHttpAsync(url);
             }
+            catch (Exception ex) when (ex is HttpRequestException || ex is JsonException)
+            {
+                throw new Exception("Error al obtener o procesar la información del API.", ex);
+            }
+        }
+
+        private async Task<UsuarioResponse> RealizarSolicitudHttpAsync(string url)
+        {
+            var response = await _httpClient.GetAsync(url);
+            response.EnsureSuccessStatusCode();
 
             string jsonResponse = await response.Content.ReadAsStringAsync();
 
-            // Deserializa la respuesta JSON
-            var resultado = JsonSerializer.Deserialize<UsuarioResponse>(jsonResponse, new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            });
-
-            return resultado;
+            return JsonSerializer.Deserialize<UsuarioResponse>(jsonResponse, _jsonOptions)
+                   ?? throw new JsonException("La respuesta del API es nula o está malformada.");
         }
     }
 }

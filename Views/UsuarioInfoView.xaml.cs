@@ -10,39 +10,48 @@ public partial class UsuarioInfoView : ContentPage
     public UsuarioInfoView()
     {
         InitializeComponent();
-        apiController = new ApiController();
+        var httpClient = new HttpClient();
+        apiController = new ApiController(httpClient);
     }
 
     private async void OnObtenerInformacionClicked(object sender, EventArgs e)
-{
-    string cedula = CedulaEntry.Text;
-
-    if (string.IsNullOrEmpty(cedula))
     {
-        await DisplayAlert("Error", "Por favor, introduce tu cédula.", "OK");
-        return;
-    }
+        string cedula = CedulaEntry.Text;
 
-    try
-    {
-        UsuarioResponse persona = await apiController.ObtenerNombrePorCedulaAsync(cedula);
-
-        if (persona == null || persona.Results == null || persona.Results.Count == 0)
+        if (string.IsNullOrEmpty(cedula))
         {
-            await DisplayAlert("Error", "No se encontraron datos para esta cédula.", "OK");
+            await DisplayAlert("Error", "Por favor, introduce tu cédula.", "OK");
             return;
         }
 
-        var resultado = persona.Results[0];
+        try
+        {
+            UsuarioResponse persona = await apiController.ObtenerNombrePorCedulaAsync(cedula);
 
-        NombreLabel.Text = $"Nombre Completo: {resultado.Fullname}";
-        CedulaLabel.Text = $"Cédula: {resultado.Cedula}";
-        TipoIdentificacionLabel.Text = $"Tipo Identificación: {resultado.GuessType}";
-        LicenseLabel.Text = $"Licencia: {persona.License}";
+            if (persona == null || persona.Results == null || persona.Results.Count == 0)
+            {
+                await DisplayAlert("Error", "No se encontraron datos para esta cédula.", "OK");
+                return;
+            }
+
+            var resultado = persona.Results[0];
+
+            NombreLabel.Text = $"Nombre Completo: {resultado.Fullname}";
+            CedulaLabel.Text = $"Cédula: {resultado.Cedula}";
+            TipoIdentificacionLabel.Text = $"Tipo Identificación: {resultado.GuessType}";
+        
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"No se pudo obtener la información: {ex.Message}", "OK");
+        }
     }
-    catch (Exception ex)
+    private void OnLimpiarClicked(object sender, EventArgs e)
     {
-        await DisplayAlert("Error", $"No se pudo obtener la información: {ex.Message}", "OK");
+        
+        CedulaEntry.Text = string.Empty;
+        NombreLabel.Text = "";
+        CedulaLabel.Text = "";
+        TipoIdentificacionLabel.Text = "";
     }
-}
 }

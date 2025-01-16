@@ -47,6 +47,16 @@
                 CornerRadius="25" 
                 Margin="0,10" 
                 FontAttributes="Bold" />
+        
+        <Button Text="Limpiar" 
+                Clicked="OnLimpiarClicked" 
+                BackgroundColor="#ffffff" 
+                TextColor="#1A2634" 
+                FontSize="18" 
+                HeightRequest="50" 
+                CornerRadius="25" 
+                Margin="0,10" 
+                FontAttributes="Bold" />
 
         <Frame BackgroundColor="#ffffff" 
                CornerRadius="15" 
