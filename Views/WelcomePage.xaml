@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppProyectoInvest_MAUI.Views.WelcomePage"
+             BackgroundColor="#ffffff"
+             Title="Bienvenida">
+
+    <StackLayout Padding="20" Spacing="20" VerticalOptions="Center">
+        <!-- Label para mostrar el mensaje de bienvenida -->
+        <Label x:Name="WelcomeMessageLabel"
+               FontSize="32"
+               HorizontalOptions="Center"
+               TextColor="#314865"
+               FontAttributes="Bold" />
+
+        <!-- Botón para ir a la siguiente página -->
+        <Button Text="Siguiente"
+                Clicked="OnSiguienteClicked"
+                BackgroundColor="#314865"
+                TextColor="White"
+                FontSize="18"
+                HeightRequest="50"
+                CornerRadius="25"
+                Margin="0,10"
+                FontAttributes="Bold" />
+    </StackLayout>
+</ContentPage>
