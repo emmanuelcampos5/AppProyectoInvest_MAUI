@@ -48,4 +48,5 @@ namespace AppProyectoInvest_MAUI.Controllers
                    ?? throw new JsonException("La respuesta del API es nula o está malformada.");
         }
     }
+
 }
